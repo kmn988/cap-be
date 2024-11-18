@@ -27,14 +27,20 @@ export class UsersService extends TypeOrmCrudService<User> {
     user.role = RoleEnum.ADMIN;
     const check = await this.repo.find({
       where: {
-        name,
+        email,
       },
     });
 
     if (check.length > 0) {
       throw new ConflictException('Email is already in use');
     }
-    await this.repo.save(user);
-    return dto;
+    const {
+      id,
+      email: returnEmail,
+      name: returnName,
+      role,
+      isActive,
+    } = await this.repo.save(user);
+    return { id, email: returnEmail, name: returnName, role, isActive };
   }
 }

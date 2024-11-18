@@ -4,6 +4,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './guard/auth.guard';
+import { TreesModule } from './trees/trees.module';
 
 @Module({
   imports: [
@@ -26,8 +29,14 @@ import { UsersModule } from './users/users.module';
     }),
     AuthModule,
     UsersModule,
+    TreesModule,
   ],
   controllers: [],
-  providers: [],
+  // providers: [
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: AuthGuard,
+  //   },
+  // ],
 })
 export class AppModule {}
