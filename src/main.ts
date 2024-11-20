@@ -18,14 +18,12 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('CAP')
     .setVersion('1.0')
-    .addSecurity('bearer', {
-      type: 'http',
-      scheme: 'bearer',
-    })
+    .addBearerAuth()
+    .addSecurityRequirements('bearer')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();

@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guard/auth.guard';
 import { TreesModule } from './trees/trees.module';
+import { GardensModule } from './gardens/gardens.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TreesModule } from './trees/trees.module';
     AuthModule,
     UsersModule,
     TreesModule,
+    GardensModule,
   ],
   controllers: [],
   // providers: [

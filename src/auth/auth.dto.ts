@@ -20,3 +20,8 @@ export class RefreshTokenDto {
   @ApiProperty({ required: true })
   refreshToken: string;
 }
+
+export class GoogleLoginDto {
+  @ApiProperty({ required: true })
+  accessToken: string;
+}

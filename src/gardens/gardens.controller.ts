@@ -2,21 +2,21 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../guard/auth.guard';
 import { Crud } from '@dataui/crud';
-import { Tree } from './entities/tree.entity';
-import { CreateTreeDto } from './tree.dto';
+import { Garden } from './entities/garden.entity';
+import { CreateGardenDto } from './garden.dto';
 
-@Controller('trees')
-@ApiTags('trees')
+@Controller('gardens')
+@ApiTags('gardens')
 @UseGuards(AuthGuard)
 @Crud({
   model: {
-    type: Tree,
+    type: Garden,
   },
   dto: {
-    create: CreateTreeDto,
+    create: CreateGardenDto,
   },
   //   query: {
   //     exclude: ['password', 'refreshToken'],
   //   },
 })
-export class TreesController {}
+export class GardensController {}

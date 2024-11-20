@@ -1,19 +1,11 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Generated,
-  PrimaryColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { RoleEnum } from '../user.interface';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { BaseEntity } from '../../utils/baseEntity';
+import { AuthType, RoleEnum } from '../user.interface';
+import { Garden } from '../../gardens/entities/garden.entity';
+import { Tree } from '../../trees/entities/tree.entity';
 
 @Entity('users')
-export class User {
-  @PrimaryColumn({ type: 'uuid' })
-  @Generated('uuid')
-  id: string;
-
+export class User extends BaseEntity {
   @Column()
   name: string;
 
@@ -29,12 +21,14 @@ export class User {
   @Column({ default: null })
   refreshToken: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
   @Column({ default: RoleEnum.ADMIN })
   role: string;
+
+  @Column({ type: 'enum', enum: AuthType, default: AuthType.BASIC })
+  authType: AuthType;
+  @OneToMany(() => Tree, (tree) => tree.gardener, { nullable: true })
+  trees: Tree[];
+
+  @OneToMany(() => Garden, (garden) => garden.gardener, { nullable: true })
+  gardens: Garden[];
 }
