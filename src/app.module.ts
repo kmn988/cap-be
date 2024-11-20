@@ -15,7 +15,7 @@ import { GardensModule } from './gardens/gardens.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       port: +process.env.DB_PORT,
-      host: 'localhost',
+      host: process.env.DB_HOST,
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
