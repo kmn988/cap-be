@@ -15,6 +15,13 @@ import { CreateTreeDto } from './tree.dto';
   dto: {
     create: CreateTreeDto,
   },
+  params: {
+    id: {
+      type: 'uuid',
+      primary: true,
+      field: 'id',
+    },
+  },
   //   query: {
   //     exclude: ['password', 'refreshToken'],
   //   },

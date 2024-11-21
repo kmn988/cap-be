@@ -15,6 +15,13 @@ import { CreateGardenDto } from './garden.dto';
   dto: {
     create: CreateGardenDto,
   },
+  params: {
+    id: {
+      type: 'uuid',
+      primary: true,
+      field: 'id',
+    },
+  },
   //   query: {
   //     exclude: ['password', 'refreshToken'],
   //   },

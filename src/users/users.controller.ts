@@ -19,6 +19,13 @@ import { AuthGuard, Public } from '../guard/auth.guard';
   query: {
     exclude: ['password', 'refreshToken'],
   },
+  params: {
+    id: {
+      type: 'uuid',
+      primary: true,
+      field: 'id',
+    },
+  },
 })
 export class UsersController {
   constructor(public service: UsersService) {}
