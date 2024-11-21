@@ -4,6 +4,7 @@ import { AuthGuard } from '../guard/auth.guard';
 import { Crud } from '@dataui/crud';
 import { Tree } from './entities/tree.entity';
 import { CreateTreeDto } from './tree.dto';
+import { TreesService } from './trees.service';
 
 @Controller('trees')
 @ApiTags('trees')
@@ -26,4 +27,6 @@ import { CreateTreeDto } from './tree.dto';
   //     exclude: ['password', 'refreshToken'],
   //   },
 })
-export class TreesController {}
+export class TreesController {
+  constructor(public service: TreesService) {}
+}

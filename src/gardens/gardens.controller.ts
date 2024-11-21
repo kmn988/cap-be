@@ -4,6 +4,7 @@ import { AuthGuard } from '../guard/auth.guard';
 import { Crud } from '@dataui/crud';
 import { Garden } from './entities/garden.entity';
 import { CreateGardenDto } from './garden.dto';
+import { GardensService } from './gardens.service';
 
 @Controller('gardens')
 @ApiTags('gardens')
@@ -26,4 +27,6 @@ import { CreateGardenDto } from './garden.dto';
   //     exclude: ['password', 'refreshToken'],
   //   },
 })
-export class GardensController {}
+export class GardensController {
+  constructor(public service: GardensService) {}
+}
