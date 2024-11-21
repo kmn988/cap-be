@@ -8,6 +8,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guard/auth.guard';
 import { TreesModule } from './trees/trees.module';
 import { GardensModule } from './gardens/gardens.module';
+import { NestMinioModule } from 'nestjs-minio';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -28,10 +30,18 @@ import { GardensModule } from './gardens/gardens.module';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
+    NestMinioModule.register({
+      endPoint: process.env.MINIO_ENDPOINT,
+      port: +process.env.MINIO_PORT,
+      useSSL: false,
+      accessKey: process.env.MINIO_ACCESS_KEY,
+      secretKey: process.env.MINIO_SECRET_KEY,
+    }),
     AuthModule,
     UsersModule,
     TreesModule,
     GardensModule,
+    StorageModule,
   ],
   controllers: [],
   // providers: [

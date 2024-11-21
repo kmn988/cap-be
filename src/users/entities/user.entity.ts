@@ -31,4 +31,22 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Garden, (garden) => garden.gardener, { nullable: true })
   gardens: Garden[];
+
+  @Column({ nullable: true, type: 'json' })
+  image: string;
+
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true })
+  city: string;
+
+  @Column({ nullable: true })
+  zipcode: string;
+
+  @Column({ nullable: true })
+  country: string;
+
+  @Column({ nullable: true })
+  description: string;
 }
