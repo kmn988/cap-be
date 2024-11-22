@@ -63,6 +63,7 @@ export class AuthService {
   }
   private async getToken(user: User) {
     const payload = {
+      id: user.id,
       email: user.email,
       role: user.role,
       username: user.name,
