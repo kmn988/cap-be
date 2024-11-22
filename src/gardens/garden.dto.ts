@@ -1,5 +1,5 @@
 import { ApiProperty } from '@dataui/crud/lib/crud';
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class CreateGardenDto {
   @ApiProperty({ required: true })
@@ -25,4 +25,8 @@ export class CreateGardenDto {
   @ApiProperty({ required: true })
   @IsString()
   location: string;
+
+  @ApiProperty({ required: true })
+  @IsUUID()
+  gardener: string;
 }

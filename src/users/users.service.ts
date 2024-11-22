@@ -37,7 +37,7 @@ export class UsersService extends TypeOrmCrudService<User> {
     user.name = name;
     const hashedPassword = await this.hashPassword(password);
     user.password = hashedPassword;
-    user.role = RoleEnum.ADMIN;
+    user.role = RoleEnum.USER;
     const savedUser = await this.repo.save(user);
     const buffer = Buffer.from(
       'https://png.pngtree.com/png-clipart/20231016/original/pngtree-custard-apple-fruit-watercolor-illustration-png-image_13320769.png',
@@ -56,5 +56,17 @@ export class UsersService extends TypeOrmCrudService<User> {
       image,
     } = await this.repo.save(user);
     return { id, email: returnEmail, name: returnName, role, isActive, image };
+  }
+  public async updateUser(
+    id: string,
+    dto: CreateUserDto,
+    image: Express.Multer.File,
+  ) {
+    const { name, email, password } = dto;
+    const user = await this.repo.findOne({ where: { id } });
+    if (!user) {
+      throw new ConflictException('User not found');
+    }
+    const hashedPassword = await this.hashPassword(password);
   }
 }

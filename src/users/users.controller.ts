@@ -1,10 +1,18 @@
 import { Crud, Override } from '@dataui/crud';
-import { Body, Controller, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Param,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { CreateUserDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { UsersService } from './users.service';
 import { AuthGuard, Public } from '../guard/auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('users')
 @Controller('users')
@@ -33,5 +41,19 @@ export class UsersController {
   @Override('createOneBase')
   createUser(@Body() dto: CreateUserDto) {
     return this.service.createUser(dto);
+  }
+
+  @Override('updateOneBase')
+  @UseInterceptors(FileInterceptor('poster'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    type: UpdateUserDto,
+  })
+  updateUser(
+    @Param('id') id: string,
+    @Body() dto: UpdateUserDto,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    return this.service.updateUser(id, dto, image);
   }
 }
