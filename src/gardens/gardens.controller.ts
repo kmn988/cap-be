@@ -1,7 +1,7 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../guard/auth.guard';
-import { Crud } from '@dataui/crud';
+import { Crud, Override } from '@dataui/crud';
 import { Garden } from './entities/garden.entity';
 import { CreateGardenDto } from './garden.dto';
 import { GardensService } from './gardens.service';
@@ -29,4 +29,9 @@ import { GardensService } from './gardens.service';
 })
 export class GardensController {
   constructor(public service: GardensService) {}
+
+  @Override('getOneBase')
+  getGarden(@Param('id') id: string) {
+    return this.service.getGarden(id);
+  }
 }

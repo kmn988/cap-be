@@ -26,32 +26,26 @@ export class CreateUserDto extends User {
 export class UpdateUserDto extends User {
   @ApiProperty({ require: true })
   @IsString()
-  @IsNotEmpty()
   city: string;
 
   @ApiProperty({ require: true })
   @IsString()
-  @IsNotEmpty()
   name: string;
 
   @ApiProperty({ require: true })
   @IsString()
-  @IsNotEmpty()
   country: string;
 
   @ApiProperty({ require: true })
   @IsString()
-  @IsNotEmpty()
   address: string;
 
   @ApiProperty({ require: true })
   @IsString()
-  @IsNotEmpty()
   zipcode: string;
 
   @ApiProperty({ require: true })
   @IsString()
-  @IsNotEmpty()
   description: string;
 
   @ApiProperty({ type: 'string', format: 'binary' })

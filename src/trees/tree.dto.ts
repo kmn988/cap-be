@@ -1,5 +1,11 @@
 import { ApiProperty } from '@dataui/crud/lib/crud';
-import { IsBoolean, IsNumber, IsString, IsUUID } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNumber,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateTreeDto {
   @ApiProperty({ required: true })
