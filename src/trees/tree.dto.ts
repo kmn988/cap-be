@@ -25,10 +25,6 @@ export class CreateTreeDto {
   variety: string;
 
   @ApiProperty({ required: true })
-  @IsString()
-  growingArea: string;
-
-  @ApiProperty({ required: true })
   @IsUUID()
   garden: string;
 

@@ -10,6 +10,8 @@ import { TreesModule } from './trees/trees.module';
 import { GardensModule } from './gardens/gardens.module';
 import { NestMinioModule } from 'nestjs-minio';
 import { StorageModule } from './storage/storage.module';
+import { EventsModule } from './events/events.module';
+import { TreeVarietyModule } from './tree-variety/tree-variety.module';
 
 @Module({
   imports: [
@@ -42,6 +44,8 @@ import { StorageModule } from './storage/storage.module';
     TreesModule,
     GardensModule,
     StorageModule,
+    EventsModule,
+    TreeVarietyModule,
   ],
   controllers: [],
   // providers: [

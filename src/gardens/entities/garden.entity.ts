@@ -15,17 +15,35 @@ export class Garden extends BaseEntity {
   variety: string;
 
   @Column()
-  unitArea: string;
+  ownershipType: string;
 
   @Column()
-  plantingArea: number;
+  areaUnit: string;
+
+  @Column()
+  areaSize: string;
+
+  @Column({ nullable: true })
+  plantingProcedure: string;
+
+  @Column({ nullable: true })
+  cetificate: string;
+
+  @Column()
+  province: string;
+
+  @Column()
+  district: string;
+
+  @Column()
+  commune: string;
+
+  @Column({ type: 'json', nullable: true })
+  coordinates: string;
 
   @ManyToOne(() => User, (user) => user.gardens, { nullable: true })
-  gardener: User;
+  owner: User;
 
   @OneToMany(() => Tree, (tree) => tree.garden, { nullable: true })
   trees: Tree[];
-
-  @Column()
-  location: string;
 }

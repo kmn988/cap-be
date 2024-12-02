@@ -1,5 +1,6 @@
 import { ApiProperty } from '@dataui/crud/lib/crud';
 import { IsNumber, IsString, IsUUID } from 'class-validator';
+import { Garden } from './entities/garden.entity';
 
 export class CreateGardenDto {
   @ApiProperty({ required: true })
@@ -16,11 +17,11 @@ export class CreateGardenDto {
 
   @ApiProperty({ required: true })
   @IsString()
-  unitArea: string;
+  areaUnit: string;
 
   @ApiProperty({ required: true })
   @IsNumber()
-  plantingArea: number;
+  areaSize: number;
 
   @ApiProperty({ required: true })
   @IsString()
@@ -28,5 +29,10 @@ export class CreateGardenDto {
 
   @ApiProperty({ required: true })
   @IsUUID()
-  gardener: string;
+  owner: string;
+}
+
+export class ImportGardenDto {
+  @ApiProperty({ type: 'object', format: 'binary' })
+  file: any;
 }

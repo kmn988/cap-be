@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Param,
+  Post,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -55,5 +56,23 @@ export class UsersController {
     @UploadedFile() image: Express.Multer.File,
   ) {
     return this.service.updateUser(id, dto, image);
+  }
+
+  @Post('import')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  import(@UploadedFile() data: Express.Multer.File) {
+    return this.service.import(data);
   }
 }

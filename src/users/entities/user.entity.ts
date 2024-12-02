@@ -9,7 +9,7 @@ export class User extends BaseEntity {
   @Column()
   name: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   email: string;
 
   @Column()
@@ -26,10 +26,10 @@ export class User extends BaseEntity {
 
   @Column({ type: 'enum', enum: AuthType, default: AuthType.BASIC })
   authType: AuthType;
-  @OneToMany(() => Tree, (tree) => tree.gardener, { nullable: true })
+  @OneToMany(() => Tree, (tree) => tree.owner, { nullable: true })
   trees: Tree[];
 
-  @OneToMany(() => Garden, (garden) => garden.gardener, { nullable: true })
+  @OneToMany(() => Garden, (garden) => garden.owner, { nullable: true })
   gardens: Garden[];
 
   @Column({ nullable: true, type: 'json' })
@@ -39,7 +39,16 @@ export class User extends BaseEntity {
   address: string;
 
   @Column({ nullable: true })
-  city: string;
+  province: string;
+
+  @Column({ nullable: true })
+  district: string;
+
+  @Column({ nullable: true })
+  commune: string;
+
+  @Column({ nullable: true })
+  phoneNumber: string;
 
   @Column({ nullable: true })
   zipcode: string;

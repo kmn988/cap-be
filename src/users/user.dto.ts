@@ -51,3 +51,8 @@ export class UpdateUserDto extends User {
   @ApiProperty({ type: 'string', format: 'binary' })
   file: any;
 }
+
+export class ImportUserDto {
+  @ApiProperty({ type: 'object', format: 'binary' })
+  file: any;
+}

@@ -1,6 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   SetMetadata,
   UnauthorizedException,
@@ -22,24 +23,32 @@ export class AuthGuard implements CanActivate {
     ]);
 
     if (isPublic) {
-      // 💡 See this condition
+      // 💡 Allow access to public endpoints
       return true;
     }
+
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
+    const endPointRoles: any[] = this.reflector.get<string[]>(
+      'ROLES',
+      context.getHandler(),
+    );
 
     if (!token) {
       throw new UnauthorizedException();
     }
-    try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: process.env.JWT_SECRET,
-      });
-
-      request['user'] = payload;
-    } catch {
+    const payload = await this.jwtService.verifyAsync(token, {
+      secret: process.env.JWT_SECRET,
+    });
+    if (!payload) {
       throw new UnauthorizedException();
     }
+
+    if (endPointRoles && !endPointRoles.some((r) => r === payload.role)) {
+      // Throw ForbiddenException for invalid roles
+      throw new ForbiddenException(`Role ${payload.role} cannot access`);
+    }
+
     return true;
   }
 

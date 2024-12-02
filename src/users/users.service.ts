@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { RoleEnum } from './user.interface';
 import { Repository } from 'typeorm';
 import { StorageService } from '../storage/storage.service';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class UsersService extends TypeOrmCrudService<User> {
@@ -68,5 +69,43 @@ export class UsersService extends TypeOrmCrudService<User> {
       throw new ConflictException('User not found');
     }
     const hashedPassword = await this.hashPassword(password);
+  }
+
+  async import(data) {
+    const decodedString = data.buffer.toString('utf-8');
+    try {
+      let users = [];
+      const parsedJson = JSON.parse(decodedString);
+      for (const feature of parsedJson) {
+        const user = new User();
+        user.name = feature['Họ tên chủ vườn'];
+        user.email = feature['Email'];
+        user.password = await this.hashPassword(nanoid());
+        user.role = RoleEnum.OWNER;
+        user.isActive = true;
+        user.phoneNumber = feature['Số điện thoại'];
+        user.address = feature['Địa chỉ nhà'];
+        user.province = feature['Tỉnh'];
+        user.district = feature['Huyện'];
+        user.commune = feature['Xã'];
+        users.push(user);
+        await this.repo.save(user); // Await save operation
+      }
+      const returnedUsers = users.map((user) => {
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          phoneNumber: user.phoneNumber,
+          address: user.address,
+          province: user.province,
+          district: user.district,
+          commune: user.commune,
+        };
+      });
+      return returnedUsers;
+    } catch (error) {
+      console.error('Failed to parse JSON:', error);
+    }
   }
 }
